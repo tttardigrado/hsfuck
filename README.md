@@ -8,7 +8,7 @@ Languages: Haskell
 Packages: Parsec
 
 ## Blog Post
-I wrote a [blog post](./blogpost.md) about this project
+I wrote a [blog post](./blog/) about this project
 
 ## How to install and use
 You need to have cabal and Haskell installed.
@@ -42,4 +42,3 @@ bf()
     gcc /tmp/ccode.c -o $2
 }
 ```
-

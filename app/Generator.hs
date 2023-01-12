@@ -30,8 +30,8 @@ generateC :: BF -> String
 generateC bf = concat
   [ "#include <stdio.h>\n"
   , "int main(void) {\n"
-  , "\tchar array[30000] = {0};\n"
-  , "\tchar *ptr = array;\n\n"
+  , "\tchar tape[30000] = {0};\n"
+  , "\tchar *ptr = tape;\n\n"
   , bfToC 1 bf
   , "\n}"
   ]
