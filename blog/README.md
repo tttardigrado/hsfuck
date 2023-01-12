@@ -65,7 +65,7 @@ bfToC :: Int -> [Op] -> String
 bfToC n ops = concatMap (opToC n) ops
 ```
 
-The last thing needed for fully functioning code generation is a `generate` function that generates the C program we saw previously.
+The last thing needed for fully functioning code generation is a `generateC` function that generates the C program we saw previously.
 
 ```haskell
 generateC :: [Op] -> String
