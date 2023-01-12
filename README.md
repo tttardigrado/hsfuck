@@ -1,6 +1,8 @@
 # hsfuck
 **Build you a brainfuck compiler for the greater good**
 
+![Logo](./Logo.png)
+
 A _brainfuck_ to _C_ compiler written in _Haskell_*
 
 ## Teck stack
