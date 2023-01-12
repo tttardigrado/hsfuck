@@ -15,7 +15,7 @@ opToC n op = case op of
   Inp     -> tabs n ++ "*ptr = getchar();\n"
   Set x   -> concat [tabs n, "*ptr = ",  show x, ";\n"]
   Loop xs -> concat
-    [ tabs n, "while (*ptr != 0) {\n"
+    [ tabs n, "while (*ptr) {\n"
     , bfToC (n+1) xs
     , tabs n, "}\n"
     ]

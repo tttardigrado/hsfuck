@@ -1,15 +1,13 @@
 # Build you a brainfuck compiler for the greater good
 
 ## Index
-1. [Parsing]()
-2. [Optimization]()
-3. [Code Generation]
-4. [Conclusion]()
+1. [What is brainfuck?](#what-is-brainfuck)
+1. [Parsing](#parsing)
+2. [Optimization](#optimization)
+3. [Code Generation](#code-generation)
+4. [Conclusion](#conclusion)
 
-
-## What is Brainfuck?
-
-## What's the Plan
+## What is brainfuck?
 
 ## Parsing
 
@@ -56,7 +54,7 @@ opToC :: Int -> [Op] -> String
 opToC n op = case op of
   ...
   Loop xs -> concat
-    [ tabs n, "while (*ptr != 0) {\n"
+    [ tabs n, "while (*ptr) {\n"
     -- map the inner ops with incremented identation
     , bfToC (n+1) xs
     , tabs n, "}\n"
