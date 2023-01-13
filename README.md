@@ -5,15 +5,15 @@
 
 A _brainfuck_ to _C_ compiler written in _Haskell_*
 
-## Teck stack
-Languages: Haskell
-Packages: Parsec
+## Tech stack
+* Languages: Haskell
+* Packages: Parsec
 
 ## Blog Post
 I wrote a [blog post](./blog/) about this project
 
 ## How to install and use
-You need to have cabal and Haskell installed.
+You need to have cabal and Haskell installed. Then run the following commands
 
 ```sh
 # clone the repo and move to it
