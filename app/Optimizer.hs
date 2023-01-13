@@ -68,12 +68,14 @@ justSet ops = case ops of
   otherwise              -> basic justSet ops
 
 -- [->+<] and [>+<-] are used to multiply to the next value
--- ...[->+++<]... => ...*3...
+-- ...[->>+++<<]... => ...*2,3...
 mul :: BF -> BF
 mul ops = case ops of
-  Loop [Inc (-1), Mov 1, Inc x, Mov (-1)] : xs | x > 0 -> Mul x : mul xs
-  Loop [Mov 1, Inc x, Mov (-1), Inc (-1)] : xs | x > 0 -> Mul x : mul xs
-  otherwise                                            -> basic mul ops
+  Loop [Inc (-1), Mov a, Inc x, Mov b] : xs
+    | x > 0 && a == -b -> Mul a x : mul xs
+  Loop [Mov a, Inc x, Mov b, Inc (-1)] : xs
+    | x > 0 && a == -b -> Mul a x : mul xs
+  otherwise            -> basic mul ops
 
 
 -- final brainfuck optimization function

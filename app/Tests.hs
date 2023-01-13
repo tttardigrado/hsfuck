@@ -73,7 +73,6 @@ allTests =
   , test ">>><+<>>>>><" [Mov 2, Inc 1, Mov 3]
   , test "<<<><><+<<<>" [Mov (-3), Inc 1, Mov (-2)]
 
-
   -- dead Set
   , test "++++[-]" [Set 0]
   , test "+[-]++++[-]" [Set 0]
@@ -129,7 +128,6 @@ allTests =
   , test ">[[-]---+++[>>>]+++]" [Mov 1, Loop[Set 3]]
   , test ">[[-]+---++[>>>]+++]" [Mov 1, Loop[Set 3]]
   , test ">[[-]-+++--[>>>]+++]" [Mov 1, Loop[Set 3]]
-  
 
   -- dead Op
   , test "++++++------" []
@@ -143,15 +141,27 @@ allTests =
   , test ">[----++++-+-+]" [Mov 1, Loop []]
   , test ">[<<<<>>>><><>]" [Mov 1, Loop []]
 
-
   -- mul
-  , test "+[->+<]" [Inc 1, Mul 1]
-  , test "+[->++++<]" [Inc 1, Mul 4]
-  , test "+[->++++---<]" [Inc 1, Mul 1]
-  , test "+[->+-+-++<]" [Inc 1, Mul 2]
+  , test "+[->+<]" [Inc 1, Mul 1 1]
+  , test "+[->>>+<<<]" [Inc 1, Mul 3 1]
+  , test "+[->++++<]" [Inc 1, Mul 1 4]
+  , test "+[->++++---<]" [Inc 1, Mul 1 1]
+  , test "+[->>+<]" [Inc 1, Loop [Inc (-1), Mov 2, Inc 1, Mov (-1)]]
+  , test "+[->++++<<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc 4, Mov (-2)]]
   , test "+[->-<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-1), Mov (-1)]]
+  , test "+[->>>-<<<]" [Inc 1, Loop [Inc (-1), Mov 3, Inc (-1), Mov (-3)]]
   , test "+[->----<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-4), Mov (-1)]]
   , test "+[->----+++<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-1), Mov (-1)]]
-  , test "+[->-+-+--<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-2), Mov (-1)]]
-  , test "+[+[->++<]]" [Inc 1, Loop [Inc 1, Mul 2]]
+  , test "+[+[->++<]]" [Inc 1, Loop [Inc 1, Mul 1 2]]
+  , test "+[>+<-]" [Inc 1, Mul 1 1]
+  , test "+[>>>+<<<-]" [Inc 1, Mul 3 1]
+  , test "+[>++++<-]" [Inc 1, Mul 1 4]
+  , test "+[>++++---<-]" [Inc 1, Mul 1 1]
+  , test "+[>>+<-]" [Inc 1, Loop [Mov 2, Inc 1, Mov (-1), Inc (-1)]]
+  , test "+[>++++<<-]" [Inc 1, Loop [Mov 1, Inc 4, Mov (-2), Inc (-1)]]
+  , test "+[>-<-]" [Inc 1, Loop [Mov 1, Inc (-1), Mov (-1), Inc (-1)]]
+  , test "+[>>>-<<<-]" [Inc 1, Loop [Mov 3, Inc (-1), Mov (-3), Inc (-1)]]
+  , test "+[>----<-]" [Inc 1, Loop [Mov 1, Inc (-4), Mov (-1), Inc (-1)]]
+  , test "+[>----+++<-]" [Inc 1, Loop [Mov 1, Inc (-1), Mov (-1), Inc (-1)]]
+  , test "+[+[>++<-]]" [Inc 1, Loop [Inc 1, Mul 1 2]]
   ]

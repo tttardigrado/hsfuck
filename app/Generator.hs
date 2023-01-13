@@ -14,8 +14,8 @@ opToC n op = case op of
   Out     -> tabs n ++ "putchar(*ptr);\n"
   Inp     -> tabs n ++ "*ptr = getchar();\n"
   Set x   -> concat [tabs n, "*ptr = ",  show x, ";\n"]
-  Mul x   -> concat [tabs n, "*(ptr+1) += *ptr * ", show x, "; *ptr = 0;\n"]
-  Debug   -> tabs n ++ "DEBUG();\n"
+  Mul d x -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
+  Debug   -> tabs n ++ "debug();\n"
   Loop xs -> concat
     [ tabs n, "while (*ptr) {\n"
     , bfToC (n+1) xs
@@ -31,8 +31,9 @@ bfToC = concatMap . opToC
 generateC :: BF -> String
 generateC bf = concat
   [ "#include <stdio.h>\n"
-  , "#define DEBUG() printf(\"\\n# DEBUG: | \");for(int i=0;i<10;i++){printf(\"%d | \", *(ptr+i));}printf(\"\\n\\n\");\n"
-  , "int main(void) {\n"
+  , "#define mul(d, m) *(ptr+(d)) += *ptr * (m); *ptr = 0;\n"
+  , "#define debug() printf(\"\\n# DEBUG: | \");for(int i=0;i<10;i++){printf(\"%d | \", *(ptr+i));}printf(\"\\n\\n\");\n"
+  , "\nint main(void) {\n"
   , "\tchar tape[30000] = {0};\n"
   , "\tchar *ptr = tape;\n\n"
   , bfToC 1 bf

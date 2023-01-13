@@ -2,14 +2,14 @@ module Lang ( Op (..), BF ) where
 
 -- Representation of an individual brainfuck operation
 data Op
-  = Inc Int   -- + -    inc/dec current by amount
-  | Mov Int   -- < >    move pointer by ammount
-  | Out       -- .      output
-  | Inp       -- ,      input
-  | Set Int   -- OPTIM: set current to value
-  | Mul Int   -- OPTIM: set the next cell to a multiple
-  | Debug     -- DEBUG: construct: print 10 cells 
-  | Loop [Op] -- [...]  loop the inner ops
+  = Inc Int     -- + -    inc/dec current by amount
+  | Mov Int     -- < >    move pointer by ammount
+  | Out         -- .      output
+  | Inp         -- ,      input
+  | Set Int     -- OPTIM: set current to value
+  | Mul Int Int -- OPTIM: set displacement cell to a multiple
+  | Debug       -- DEBUG: construct: print 10 cells 
+  | Loop [Op]   -- [...]  loop the inner ops
   deriving (Show, Eq)
 
 
