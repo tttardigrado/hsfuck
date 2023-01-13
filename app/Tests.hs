@@ -1,6 +1,6 @@
 module Tests ( testAll ) where
 
-import Lang ( BF, Op(Loop, Out, Inc, Inp, Set, Mov) )
+import Lang ( BF, Op(Loop, Out, Inc, Inp, Mul, Set, Mov) )
 import Optimizer ( optimizeBF )
 import Parser ( parseBF )
 
@@ -143,4 +143,15 @@ allTests =
   , test ">[----++++-+-+]" [Mov 1, Loop []]
   , test ">[<<<<>>>><><>]" [Mov 1, Loop []]
 
+
+  -- mul
+  , test "+[->+<]" [Inc 1, Mul 1]
+  , test "+[->++++<]" [Inc 1, Mul 4]
+  , test "+[->++++---<]" [Inc 1, Mul 1]
+  , test "+[->+-+-++<]" [Inc 1, Mul 2]
+  , test "+[->-<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-1), Mov (-1)]]
+  , test "+[->----<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-4), Mov (-1)]]
+  , test "+[->----+++<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-1), Mov (-1)]]
+  , test "+[->-+-+--<]" [Inc 1, Loop [Inc (-1), Mov 1, Inc (-2), Mov (-1)]]
+  , test "+[+[->++<]]" [Inc 1, Loop [Inc 1, Mul 2]]
   ]

@@ -14,6 +14,7 @@ opToC n op = case op of
   Out     -> tabs n ++ "putchar(*ptr);\n"
   Inp     -> tabs n ++ "*ptr = getchar();\n"
   Set x   -> concat [tabs n, "*ptr = ",  show x, ";\n"]
+  Mul x   -> concat [tabs n, "*(ptr+1) += *ptr * ", show x, "; *ptr = 0;\n"]
   Debug   -> tabs n ++ "DEBUG();\n"
   Loop xs -> concat
     [ tabs n, "while (*ptr) {\n"

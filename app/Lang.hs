@@ -7,6 +7,7 @@ data Op
   | Out       -- .      output
   | Inp       -- ,      input
   | Set Int   -- OPTIM: set current to value
+  | Mul Int   -- OPTIM: set the next cell to a multiple
   | Debug     -- DEBUG: construct: print 10 cells 
   | Loop [Op] -- [...]  loop the inner ops
   deriving (Show, Eq)

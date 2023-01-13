@@ -67,6 +67,15 @@ justSet ops = case ops of
   Set 0    : Loop _ : xs -> justSet $ Set 0       : xs
   otherwise              -> basic justSet ops
 
+-- [->+<] and [>+<-] are used to multiply to the next value
+-- ...[->+++<]... => ...*3...
+mul :: BF -> BF
+mul ops = case ops of
+  Loop [Inc (-1), Mov 1, Inc x, Mov (-1)] : xs | x > 0 -> Mul x : mul xs
+  Loop [Mov 1, Inc x, Mov (-1), Inc (-1)] : xs | x > 0 -> Mul x : mul xs
+  otherwise                                            -> basic mul ops
+
+
 -- final brainfuck optimization function
 optimizeBF :: BF -> BF
-optimizeBF = deadSet . justSet . deadOp . zero . join . initLoop . deadLoop
+optimizeBF = deadSet . justSet . deadOp . mul . zero . join . initLoop . deadLoop
