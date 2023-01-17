@@ -15,6 +15,7 @@ opToC n op = case op of
   Inp     -> tabs n ++ "*ptr = getchar();\n"
   Set x   -> concat [tabs n, "*ptr = ",  show x, ";\n"]
   Mul d x -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
+  Dup     -> tabs n ++ "dup();\n"
   Debug   -> tabs n ++ "debug();\n"
   Loop xs -> concat
     [ tabs n, "while (*ptr) {\n"
@@ -33,6 +34,7 @@ generateC bf = concat
   [ "#include <stdio.h>\n"
   , "#define mul(d, m) *(ptr+(d)) += *ptr * (m); *ptr = 0;\n"
   , "#define debug() printf(\"\\n# DEBUG: | \");for(int i=0;i<10;i++){printf(\"%d | \", *(ptr+i));}printf(\"\\n\\n\");\n"
+  , "#define dup() *(ptr+1) += *ptr; *(ptr+2) += *ptr; *ptr = 0;\n"
   , "\nint main(void) {\n"
   , "\tchar tape[30000] = {0};\n"
   , "\tchar *ptr = tape;\n\n"

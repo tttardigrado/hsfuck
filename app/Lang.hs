@@ -8,8 +8,9 @@ data Op
   | Inp         -- ,      input
   | Set Int     -- OPTIM: set current to value
   | Mul Int Int -- OPTIM: set displacement cell to a multiple
+  | Dup         -- OPTIM: duplicate to the two next values
   | Debug       -- DEBUG: construct: print 10 cells 
-  | Loop [Op]   -- [...]  loop the inner ops
+  | Loop BF     -- [...]  loop the inner ops
   deriving (Show, Eq)
 
 

@@ -17,14 +17,14 @@ initLoop ops = case ops of
   otherwise   -> ops
 
 -- only the first of sequential loops will execute
--- ...[a][_]... => ...[a]... 
+-- ...[a][_]... => ...[a]...
 deadLoop :: BF -> BF
 deadLoop ops = case ops of
   Loop x : Loop _ : xs -> deadLoop $ Loop (deadLoop x) : xs
   otherwise            -> basic deadLoop ops
 
 -- [-] and [+] are used to set the cell to 0
--- ...[-]... => ...0... 
+-- ...[-]... => ...0...
 zero :: BF -> BF
 zero ops = case ops of
   Loop [Inc (-1)] : xs -> Set 0 : zero xs
@@ -77,7 +77,16 @@ mul ops = case ops of
     | x > 0 && a == -b -> Mul a x : mul xs
   otherwise            -> basic mul ops
 
+-- [->+>+<<] and [>+>+<<-] are used to copy a value to the next 2
+dup :: BF -> BF
+dup ops = case ops of
+  Loop [Inc (-1), Mov 1, Inc 1, Mov 1, Inc 1, Mov (-2)] : xs
+            -> Dup : dup xs
+  Loop [Mov 1, Inc 1, Mov 1, Inc 1, Mov (-2), Inc (-1)] : xs
+            -> Dup : dup xs
+  otherwise -> basic dup ops
+
 
 -- final brainfuck optimization function
 optimizeBF :: BF -> BF
-optimizeBF = deadSet . justSet . deadOp . mul . zero . join . initLoop . deadLoop
+optimizeBF = deadSet . justSet . deadOp . dup . mul . zero . join . initLoop . deadLoop
