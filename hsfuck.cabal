@@ -32,7 +32,7 @@ executable hsfuck
                  ,    Tests
 
     -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
+    other-extensions: PatternSynonyms
     build-depends:    base ^>=4.13.0.0
                  ,    parsec
     hs-source-dirs:   app

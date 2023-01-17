@@ -1,6 +1,8 @@
+{-# LANGUAGE PatternSynonyms #-}
+
 module Optimizer ( optimizeBF ) where
 
-import Lang ( Op (..), BF )
+import Lang ( Op (..), BF, pattern Clear0, pattern Clear1, pattern Mul0, pattern Mul1, pattern Dup0, pattern Dup1)
 
 -- basic pattern for optimization function that covers the "rest" of the cases
 basic :: (BF -> BF) -> BF -> BF
@@ -27,9 +29,9 @@ deadLoop ops = case ops of
 -- ...[-]... => ...0...
 zero :: BF -> BF
 zero ops = case ops of
-  Loop [Inc (-1)] : xs -> Set 0 : zero xs
-  Loop [Inc   1 ] : xs -> Set 0 : zero xs
-  otherwise            -> basic zero ops
+  Clear0 : xs -> Set 0 : zero xs
+  Clear1 : xs -> Set 0 : zero xs
+  otherwise   -> basic zero ops
 
 -- multiple increments/movement can be joined into one
 -- ...+++-... => ...++...   ...<<<>... => ...<<...
@@ -71,19 +73,15 @@ justSet ops = case ops of
 -- ...[->>+++<<]... => ...*2,3...
 mul :: BF -> BF
 mul ops = case ops of
-  Loop [Inc (-1), Mov a, Inc x, Mov b] : xs
-    | x > 0 && a == -b -> Mul a x : mul xs
-  Loop [Mov a, Inc x, Mov b, Inc (-1)] : xs
-    | x > 0 && a == -b -> Mul a x : mul xs
-  otherwise            -> basic mul ops
+  Mul0 x a b : xs | x > 0 && a == -b -> Mul a x : mul xs
+  Mul1 x a b : xs | x > 0 && a == -b -> Mul a x : mul xs
+  otherwise                          -> basic mul ops
 
 -- [->+>+<<] and [>+>+<<-] are used to copy a value to the next 2
 dup :: BF -> BF
 dup ops = case ops of
-  Loop [Inc (-1), Mov 1, Inc 1, Mov 1, Inc 1, Mov (-2)] : xs
-            -> Dup : dup xs
-  Loop [Mov 1, Inc 1, Mov 1, Inc 1, Mov (-2), Inc (-1)] : xs
-            -> Dup : dup xs
+  Dup0 : xs -> Dup : dup xs
+  Dup1 : xs -> Dup : dup xs
   otherwise -> basic dup ops
 
 
