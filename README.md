@@ -10,7 +10,7 @@ A _brainfuck_ to _C_ compiler written in _Haskell_*
 * Packages: Parsec
 
 ## Blog Post
-I wrote a [blog post](./blog/) about this project
+I wrote a [blog post](https://tttardigrado.github.io/posts/hsfuck/) about this project
 
 ## How to install and use
 You need to have cabal and Haskell installed. Then run the following commands

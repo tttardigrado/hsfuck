@@ -22,7 +22,7 @@ initLoop ops = case ops of
 -- ...[a][_]... => ...[a]...
 deadLoop :: BF -> BF
 deadLoop ops = case ops of
-  Loop x : Loop _ : xs -> deadLoop $ Loop (deadLoop x) : xs
+  Loop x : Loop _ : xs -> deadLoop $ Loop (x) : xs
   otherwise            -> basic deadLoop ops
 
 -- [-] and [+] are used to set the cell to 0
