@@ -24,21 +24,21 @@ The full code is available at this [repo](https://github.com/tttardigrado/hsfuck
 
 brainfuck was created in 1993 by Urban Müller. Inspired by FALSE's 1024-byte compiler, Müller wanted to create a smaller one. The language consists of a `tape` (an array of byte-sized cells), a `head` (a pointer to the current cell) and instructions that manipulate them:
 
-| Instruction | C equivalent      | Meaning                            |
-|-------------|-------------------|------------------------------------|
-| +           | `*ptr += 1;`      | increment the current cell         |
-| -           | `*ptr -= 1;`      | decrement the current cell         |
-| <           | `ptr += 1;`       | move the head left                 |
-| >           | `ptr -= 1;`       | move the head right                |
-| .           | `putchar(*ptr);`  | print the current cell's as ASCII  |
-| ,           | `*ptr=getchar();` | set the current cell to user input |
-| [ ]         | `while (*ptr) {}` | while loop                         |
+| Instruction | Meaning                            |
+|-------------|------------------------------------|
+| +           | increment the current cell         |
+| -           | decrement the current cell         |
+| <           | move the head left                 |
+| >           | move the head right                |
+| .           | print the current cell's as ASCII  |
+| ,           | set the current cell to user input |
+| [ ]         | while loop                         |
 
 The `tape` is represented as an array with a length of `30000` and the `head` is a pointer to it. In C:
 
 ```c
-char array[30000] = {0};
-char *ptr = array;
+char tape[30000] = {0};
+char *ptr = tape;
 ```
 
 Even if brainfuck is simple, it was proved to be [Turing-Complete](http://www.iwriteiam.nl/Ha_bf_Turing.html), proving, one more time, that complexity can emerge from simplicity.
@@ -216,7 +216,16 @@ optimize = clear . join . deadLoop
 
 Until now, we have been talking about parsing and optimization, but all of that is kinda useless if we can't run our code. To make it runnable, we're going to compile brainfuck down to C. (I chose C to simplify the process, but a good exercise would be to compile it down to some assembly language, python bytecode or java bytecode)
 
-brainfuck's semantics are identical to *C*'s, making the translation process between them straightforward. Before the translation, we need a working *C* program with some auxiliary structures: the **Tape** and the **Pointer** (as explained above)
+| Op      | C equivalent          |
+|---------|-----------------------|
+| Inc n   | `*ptr += n;`          |
+| Mov n   | `ptr += n;`           |
+| Out     | `putchar(*ptr);`      |
+| Inp     | `*ptr = getchar();`   |
+| Clear   | `*ptr = 0;`           |
+| Loop xs | `while (*ptr) { xs }` |
+
+brainfuck's semantics are identical to *C*'s, making the translation process between them straightforward. Before the translation, we need a working *C* program with some auxiliary structures: the **Tape** and the **Pointer** (as shown above)
 
 ```c
 #include <stdio.h>
