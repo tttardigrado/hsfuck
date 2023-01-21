@@ -1,4 +1,8 @@
 # hsfuck
+![Tests CI](https://github.com/tttardigrado/hsfuck/actions/workflows/tests.yml/badge.svg)
+![Build CI](https://github.com/tttardigrado/hsfuck/actions/workflows/haskell.yml/badge.svg)
+
+
 **Build you a brainfuck compiler for the greater good**
 
 ![Logo](./Logo.png)
