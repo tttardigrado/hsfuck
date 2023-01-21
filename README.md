@@ -4,11 +4,9 @@
 ![License](https://img.shields.io/github/license/tttardigrado/hsfuck)
 <a href="https://twitter.com/intent/tweet?text=Check%20out%20hsfuck%20by%20%40_tardigrado_%20https%3A%2F%2Fgithub.com%2Ftttardigrado%2Fhsfuck 😁"><img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Ftttardigrado%2Fhsfuck"></a>
 
-**Build you a brainfuck compiler for the greater good**
-
 ![Logo](./Logo.png)
 
-A _brainfuck_ to _C_ compiler written in _Haskell_*
+A _brainfuck_ to _C_ compiler written in _Haskell_
 
 ## Tech stack
 * Languages: Haskell
