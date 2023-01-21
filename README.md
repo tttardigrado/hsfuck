@@ -21,7 +21,7 @@ You need to have cabal and Haskell installed. Then run the following commands
 
 ```sh
 # clone the repo and move to it
-git clone .....
+git clone https://github.com/tttardigrado/hsfuck
 cd hsfuck
 
 # build the project using cabal
