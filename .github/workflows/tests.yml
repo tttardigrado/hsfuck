@@ -1,4 +1,4 @@
-name: Build
+name: Tests
 
 on:
   push:
@@ -36,6 +36,6 @@ jobs:
     - name: Install dependencies
       run: |
         cabal update
-        cabal build --only-dependencies --enable-benchmarks
-    - name: Build
-      run: cabal build --enable-benchmarks all
+        cabal build --only-dependencies --enable-tests --enable-benchmarks
+    - name: Run tests
+      run: cabal test all
