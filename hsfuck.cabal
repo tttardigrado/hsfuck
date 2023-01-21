@@ -11,29 +11,47 @@ version:            0.1.0.0
 -- A URL where users can report bugs.
 -- bug-reports:
 
--- The license under which the package is released.
--- license:
+license:            MIT
 author:             Gonçalo Teixeira
 maintainer:         gspteixeira@gmail.com
 
--- A copyright notice.
--- copyright:
--- category:
 extra-source-files: CHANGELOG.md
+
+library hsfuck-lib
+    exposed-modules:  Generator
+                   ,  Lang
+                   ,  Optimizer
+                   ,  Parser
+    hs-source-dirs:   lib
+    other-extensions: PatternSynonyms
+    build-depends:    base ^>=4.13
+                 ,    parsec
+    default-language: Haskell2010
 
 executable hsfuck
     main-is:          Main.hs
-
-    -- Modules included in this executable, other than Main.
+    build-depends:    base ^>=4.13
+                 ,    parsec
+                 ,    hsfuck-lib
     other-modules:    Generator
                  ,    Lang
                  ,    Optimizer
                  ,    Parser
-                 ,    Tests
-
-    -- LANGUAGE extensions used by modules in this package.
-    other-extensions: PatternSynonyms
-    build-depends:    base ^>=4.13.0.0
-                 ,    parsec
     hs-source-dirs:   app
+                  ,   lib
     default-language: Haskell2010
+
+test-suite tests
+    type:             exitcode-stdio-1.0
+    main-is:          Test.hs
+    build-depends:    base ^>=4.13
+                 ,    parsec
+                 ,    hsfuck-lib
+    hs-source-dirs:   tests
+                  ,   lib
+    other-modules:    Generator
+                 ,    Lang
+                 ,    Optimizer
+                 ,    Parser
+    default-language: Haskell2010
+

@@ -5,6 +5,9 @@ import Parser ( parseBF )
 import Optimizer ( optimizeBF )
 import Generator ( generateC )
 
+import System.Exit ( exitSuccess, exitFailure )
+
+
 
 compiler :: String -> String -> IO ()
 compiler file out = do

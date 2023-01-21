@@ -1,8 +1,18 @@
-module Tests ( testAll ) where
+module Main where
 
 import Lang ( BF, Op(Loop, Out, Inc, Inp, Mul, Set, Mov, Dup) )
 import Optimizer ( optimizeBF )
 import Parser ( parseBF )
+import System.Exit ( exitSuccess, exitFailure )
+
+main :: IO ()
+main = if null testAll
+  then putStrLn "All tests passed"           >> exitSuccess
+  else putStrLn ("Failed: " ++ show testAll) >> exitFailure
+
+-- run all tests
+testAll :: [(Int, String, String)]
+testAll = isValidAll 0 allTests
 
 -- validate all tests (tagged with an integer)
 isValidAll :: Int -> [(String, String, Bool)] -> [(Int, String, String)]
@@ -18,10 +28,6 @@ test prog want =
   let op = optimizeBF bf in
   -- Parse the want without optimization
   (concatMap show op, concatMap show want, op == want)
-
--- run all tests
-testAll :: [(Int, String, String)]
-testAll = isValidAll 0 allTests
 
 allTests =
   [ -- initial loop
