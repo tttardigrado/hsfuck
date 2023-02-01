@@ -51,6 +51,6 @@ bf()
 ## TO DO:
 - [ ] `:` output the cell as a number
 - [ ] `;` input to the cell as a number
-- [ ] `0` set the cell to 0
+- [X] `0` set the cell to 0
 - [ ] `?` boolean-ify (if x = 0 then x := 0 else x := 1)
 - [ ] `|` end loop
