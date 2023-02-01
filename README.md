@@ -56,5 +56,5 @@ bf()
 - [ ] `^`, `&` and `|` -> bitwise XOR, AND and OR of the current cell and the register
 - [ ] `*`, `/`, `_`, `$` -> multiplication, int division, subtraction and sum of the current cell and the register
 - [ ] `~` -> swap register and cell
-- [ ] `!` -> set register to cell
+- [ ] `#` -> set register to cell
 - [ ] `@` -> set cell to register

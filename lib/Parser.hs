@@ -40,16 +40,16 @@ pInp = Inp <$ char ','
 pSet :: Parser Op
 pSet = Loop [Inc (-1)] <$ char '0'
 
--- parse # ==> Debug
+-- parse ? ==> Debug
 pDebug :: Parser Op
-pDebug = Debug <$ char '#'
+pDebug = Debug <$ char '?'
 
 -- parse [ ops ] ==> Loop ops
 pLoop :: Parser Op
 pLoop = fmap Loop (between (char '[') (char ']') pExpr)
 
 -- parse brainfuck expressions
--- b ::= + | - | < | > | « | » | , | . | 0 | [b] | bb
+-- b ::= + | - | < | > | « | » | , | . | 0 | ? | [b] | bb
 pExpr :: Parser BF
 pExpr = many1 $ pPlus <|> pMinus <|> pRight <|> pLeft <|> pRS <|> pLS <|> pInp <|> pOut <|> pSet <|> pDebug <|> pLoop
 
