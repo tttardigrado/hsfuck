@@ -12,6 +12,14 @@ pPlus = fmap (Inc . length) (many1 $ char '+')
 pMinus :: Parser Op
 pMinus = fmap (Inc . negate . length) (many1 $ char '-')
 
+-- parse n »'s  ==> Sft n
+pRS :: Parser Op
+pRS = fmap (Sft . length) (many1 $ char '»')
+
+-- parse n -'s  ==> Inc -n
+pLS :: Parser Op
+pLS = fmap (Sft . negate . length) (many1 $ char '«')
+
 -- parse n >'s  ==> Mov n
 pRight :: Parser Op
 pRight = fmap (Mov . length) (many1 $ char '>')
@@ -41,14 +49,14 @@ pLoop :: Parser Op
 pLoop = fmap Loop (between (char '[') (char ']') pExpr)
 
 -- parse brainfuck expressions
--- b ::= + | - | . | , | < | > | 0 | [b] | bb
+-- b ::= + | - | < | > | « | » | , | . | 0 | [b] | bb
 pExpr :: Parser BF
-pExpr = many1 $ pPlus <|> pMinus <|> pRight <|> pLeft <|> pInp <|> pOut <|> pSet <|> pDebug <|> pLoop
+pExpr = many1 $ pPlus <|> pMinus <|> pRight <|> pLeft <|> pRS <|> pLS <|> pInp <|> pOut <|> pSet <|> pDebug <|> pLoop
 
 -- non-brainfuck legal characters count as comments and should be ignored
 -- filter them out
 ignoreComments :: String -> String
-ignoreComments = filter (`elem` "+-<>.,[]0#")
+ignoreComments = filter (`elem` "+-<>.,[]0#«»")
 
 -- Parser function for brainfuck programs
 parseBF :: String -> Either ParseError BF

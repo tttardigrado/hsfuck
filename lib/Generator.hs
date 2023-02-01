@@ -9,15 +9,17 @@ tabs n = replicate n '\t'
 -- convert a single operation op into it's C equivalent idented by n
 opToC :: Int -> Op -> String
 opToC n op = case op of
-  Inc x   -> concat [tabs n, "*ptr += ", show x, ";\n"]
-  Mov x   -> concat [tabs n,  "ptr += ", show x, ";\n"]
-  Out     -> tabs n ++ "putchar(*ptr);\n"
-  Inp     -> tabs n ++ "*ptr = getchar();\n"
-  Set x   -> concat [tabs n, "*ptr = ",  show x, ";\n"]
-  Mul d x -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
-  Dup     -> tabs n ++ "dup();\n"
-  Debug   -> tabs n ++ "debug();\n"
-  Loop xs -> concat
+  Inc x       -> concat [tabs n,  "*ptr += ", show x, ";\n"]
+  Sft x | x>0 -> concat [tabs n, "*ptr >>= ", show x, ";\n"]
+  Sft x       -> concat [tabs n, "*ptr <<= ", show x, ";\n"]
+  Mov x       -> concat [tabs n,   "ptr += ", show x, ";\n"]
+  Out         -> tabs n ++ "putchar(*ptr);\n"
+  Inp         -> tabs n ++ "*ptr = getchar();\n"
+  Set x       -> concat [tabs n, "*ptr = ",  show x, ";\n"]
+  Mul d x     -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
+  Dup         -> tabs n ++ "dup();\n"
+  Debug       -> tabs n ++ "debug();\n"
+  Loop xs     -> concat
     [ tabs n, "while (*ptr) {\n"
     , bfToC (n+1) xs
     , tabs n, "}\n"

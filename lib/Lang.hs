@@ -6,6 +6,7 @@ module Lang (Op (..), BF, pattern Clear0, pattern Clear1, pattern Mul0, pattern 
 data Op
   = Inc Int     -- + -    inc/dec current by amount
   | Mov Int     -- < >    move pointer by ammount
+  | Sft Int     -- « »    right/left shift
   | Out         -- .      output
   | Inp         -- ,      input
   | Set Int     -- OPTIM: set current to value

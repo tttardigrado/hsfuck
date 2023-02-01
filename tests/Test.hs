@@ -1,6 +1,6 @@
 module Main where
 
-import Lang ( BF, Op(Loop, Out, Inc, Inp, Mul, Set, Mov, Dup) )
+import Lang ( BF, Op(Loop, Out, Inc, Inp, Mul, Set, Mov, Sft, Dup) )
 import Optimizer ( optimizeBF )
 import Parser ( parseBF )
 import System.Exit ( exitSuccess, exitFailure )
@@ -82,24 +82,34 @@ allTests =
   , test "<<<><><<<<<>" [Mov (-6)]
   , test ">>><+<>>>>><" [Mov 2, Inc 1, Mov 3]
   , test "<<<><><+<<<>" [Mov (-3), Inc 1, Mov (-2)]
+  , test "»»»»»»»»»»»«" [Sft 10]
+  , test "«««««««««««»" [Sft (-10)]
+  , test "»»»«»«»»»»»«" [Sft 6]
+  , test "«««»«»«««««»" [Sft (-6)]
+  , test "»»»«+«»»»»»«" [Sft 2, Inc 1, Sft 3]
+  , test "«««»«»«+«««»" [Sft (-3), Inc 1, Sft (-2)]
 
   -- dead Set
   , test "++++[-]" [Set 0]
+  , test "»»»»[-]" [Set 0]
   , test "++++0" [Set 0]
   , test "+[-]++++[-]" [Set 0]
   , test ",[-]" [Set 0]
   , test ",0" [Set 0]
   , test "++++,[-]" [Set 0]
   , test "++++," [Inp]
+  , test "««««," [Inp]
   , test "+[-]," [Inp]
   , test "++++[-]," [Inp]
   , test ",,,,,,,," [Inp]
   , test ">[++++[-]]]" [Mov 1, Loop [Set 0]]
+  , test ">[««««[-]]]" [Mov 1, Loop [Set 0]]
   , test ">[+[-]++++[-]]" [Mov 1, Loop [Set 0]]
   , test ">[,[-]]" [Mov 1, Loop [Set 0]]
   , test ">[++++,[-]]" [Mov 1, Loop [Set 0]]
   , test ">[++++,0]" [Mov 1, Loop [Set 0]]
   , test ">[++++,]" [Mov 1, Loop [Inp]]
+  , test ">[««««,]" [Mov 1, Loop [Inp]]
   , test ">[+[-],]" [Mov 1, Loop [Inp]]
   , test ">[++++[-],]" [Mov 1, Loop [Inp]]
   , test ">[++++0,]" [Mov 1, Loop [Inp]]
@@ -148,14 +158,18 @@ allTests =
   -- dead Op
   , test "++++++------" []
   , test ">>>>>><<<<<<" []
-  , test ">>>><<<<++--" []
+  , test "»»»»»»««««««" []
+  , test ">><<++--««»»" []
   , test "----++++-+-+" []
   , test "<<<<>>>><><>" []
+  , test "««««»»»»«»«»" []
   , test ">[++++++------]" [Mov 1, Loop []]
+  , test ">[»»»»»»««««««]" [Mov 1, Loop []]
   , test ">[>>>>>><<<<<<]" [Mov 1, Loop []]
-  , test ">[>>>><<<<++--]" [Mov 1, Loop []]
+  , test ">[>><<++--««»»]" [Mov 1, Loop []]
   , test ">[----++++-+-+]" [Mov 1, Loop []]
   , test ">[<<<<>>>><><>]" [Mov 1, Loop []]
+  , test ">[««««»»»»«»«»]" [Mov 1, Loop []]
 
   -- mul
   , test "+[->+<]" [Inc 1, Mul 1 1]

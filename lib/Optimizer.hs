@@ -34,10 +34,11 @@ zero ops = case ops of
   otherwise   -> basic zero ops
 
 -- multiple increments/movement can be joined into one
--- ...+++-... => ...++...   ...<<<>... => ...<<...
+-- +++- => ++   <<<> => <<   ««»»» => »
 join :: BF -> BF
 join ops = case ops of
   Inc x  : Inc y : xs -> join $ Inc (x+y) : xs
+  Sft x  : Sft y : xs -> join $ Sft (x+y) : xs
   Mov x  : Mov y : xs -> join $ Mov (x+y) : xs
   otherwise           -> basic join ops
 
@@ -47,9 +48,11 @@ deadSet :: BF -> BF
 deadSet ops = case ops of
   Set _ : Set x : xs -> deadSet $ Set x : xs
   Inc _ : Set x : xs -> deadSet $ Set x : xs
+  Sft _ : Set x : xs -> deadSet $ Set x : xs
   Inp   : Set x : xs -> deadSet $ Set x : xs
   Set _ : Inp   : xs -> deadSet $ Inp   : xs
   Inc _ : Inp   : xs -> deadSet $ Inp   : xs
+  Sft _ : Inp   : xs -> deadSet $ Inp   : xs
   Inp   : Inp   : xs -> deadSet $ Inp   : xs
   otherwise          -> basic deadSet ops
 
@@ -57,6 +60,7 @@ deadSet ops = case ops of
 deadOp :: BF -> BF
 deadOp ops = case ops of
   Inc 0 : xs -> deadOp xs
+  Sft 0 : xs -> deadOp xs
   Mov 0 : xs -> deadOp xs
   otherwise  -> basic deadOp ops
 

@@ -49,8 +49,12 @@ bf()
 ```
 
 ## TO DO:
-- [ ] `:` output the cell as a number
-- [ ] `;` input to the cell as a number
 - [X] `0` set the cell to 0
-- [ ] `?` boolean-ify (if x = 0 then x := 0 else x := 1)
-- [ ] `|` end loop
+- [ ] Register
+- [X] `»` and `«` -> right and left shifts
+- [ ] `!` -> bitwise not of the current cell
+- [ ] `^`, `&` and `|` -> bitwise XOR, AND and OR of the current cell and the register
+- [ ] `*`, `/`, `_`, `$` -> multiplication, int division, subtraction and sum of the current cell and the register
+- [ ] `~` -> swap register and cell
+- [ ] `!` -> set register to cell
+- [ ] `@` -> set cell to register
