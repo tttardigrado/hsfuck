@@ -18,7 +18,7 @@ opToC n op = case op of
   Set x       -> concat [tabs n, "*ptr = ",  show x, ";\n"]
   Mul d x     -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
   Dup         -> tabs n ++ "dup();\n"
-  Debug       -> tabs n ++ "debug();\n"
+  Dbg         -> tabs n ++ "debug();\n"
   Loop xs     -> concat
     [ tabs n, "while (*ptr) {\n"
     , bfToC (n+1) xs

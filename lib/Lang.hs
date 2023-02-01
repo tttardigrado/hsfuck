@@ -12,7 +12,7 @@ data Op
   | Set Int     -- OPTIM: set current to value
   | Mul Int Int -- OPTIM: set displacement cell to a multiple
   | Dup         -- OPTIM: duplicate to the two next values
-  | Debug       -- DEBUG: construct: print 10 cells 
+  | Dbg         -- DEBUG: construct: print 10 cells 
   | Loop BF     -- [...]  loop the inner ops
   deriving (Show, Eq)
 
