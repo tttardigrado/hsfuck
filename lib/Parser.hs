@@ -26,8 +26,10 @@ pExpr = many1
       <|> Mov /: '<' 
       <|> Sft *: '»' 
       <|> Sft /: '«' 
-      <|> Inp <$ char ','
+      <|> Inp <$ many1 (char ',')
       <|> Out <$ char '.'
+      <|> CtR <$ many1 (char '@')
+      <|> RtC <$ many1 (char '#')
       <|> Dbg <$ char '?'
       <|> Loop [Inc 1] <$ char '0'
       <|> pLoop
@@ -35,7 +37,7 @@ pExpr = many1
 -- non-brainfuck legal characters count as comments and should be ignored
 -- filter them out
 ignoreComments :: String -> String
-ignoreComments = filter (`elem` "+-<>.,[]0?«»")
+ignoreComments = filter (`elem` "+-<>«».,[]0?@#")
 
 -- Parser function for brainfuck programs
 parseBF :: String -> Either ParseError BF

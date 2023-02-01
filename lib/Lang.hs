@@ -9,10 +9,12 @@ data Op
   | Sft Int     -- « »    right/left shift
   | Out         -- .      output
   | Inp         -- ,      input
+  | RtC         -- #      reg to cell  Ptr = Reg
+  | CtR         -- @      cell to reg  Reg = Ptr
   | Set Int     -- OPTIM: set current to value
   | Mul Int Int -- OPTIM: set displacement cell to a multiple
   | Dup         -- OPTIM: duplicate to the two next values
-  | Dbg         -- DEBUG: construct: print 10 cells 
+  | Dbg         -- DEBUG: construct: print 10 cells
   | Loop BF     -- [...]  loop the inner ops
   deriving (Show, Eq)
 

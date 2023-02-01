@@ -50,11 +50,12 @@ bf()
 
 ## TO DO:
 - [X] `0` set the cell to 0
-- [ ] Register
+- [X] Register
 - [X] `»` and `«` -> right and left shifts
 - [ ] `!` -> bitwise not of the current cell
 - [ ] `^`, `&` and `|` -> bitwise XOR, AND and OR of the current cell and the register
 - [ ] `*`, `/`, `_`, `$` -> multiplication, int division, subtraction and sum of the current cell and the register
 - [ ] `~` -> swap register and cell
-- [ ] `#` -> set register to cell
-- [ ] `@` -> set cell to register
+- [X] `#` -> set register to cell
+- [X] `@` -> set cell to register
+- [ ] Add tests for `#` and `@`

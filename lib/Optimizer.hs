@@ -19,14 +19,14 @@ initLoop ops = case ops of
   otherwise   -> ops
 
 -- only the first of sequential loops will execute
--- ...[a][_]... => ...[a]...
+-- [a][_] => [a]
 deadLoop :: BF -> BF
 deadLoop ops = case ops of
   Loop x : Loop _ : xs -> deadLoop $ Loop (x) : xs
   otherwise            -> basic deadLoop ops
 
 -- [-] and [+] are used to set the cell to 0
--- ...[-]... => ...0...
+-- [-] => 0
 zero :: BF -> BF
 zero ops = case ops of
   Clear0 : xs -> Set 0 : zero xs
@@ -43,7 +43,7 @@ join ops = case ops of
   otherwise           -> basic join ops
 
 -- multiple set/inp and increment before set/inp are useless
--- ...+++0... => ...0...  ...,0... => ...0...
+-- +++0 => 0  ,0 => 0
 deadSet :: BF -> BF
 deadSet ops = case ops of
   Set _ : Set x : xs -> deadSet $ Set x : xs
@@ -53,10 +53,9 @@ deadSet ops = case ops of
   Set _ : Inp   : xs -> deadSet $ Inp   : xs
   Inc _ : Inp   : xs -> deadSet $ Inp   : xs
   Sft _ : Inp   : xs -> deadSet $ Inp   : xs
-  Inp   : Inp   : xs -> deadSet $ Inp   : xs
   otherwise          -> basic deadSet ops
 
--- moving/increment by zero is useless
+-- moving/shifting/increment by zero is useless
 deadOp :: BF -> BF
 deadOp ops = case ops of
   Inc 0 : xs -> deadOp xs
@@ -66,7 +65,7 @@ deadOp ops = case ops of
 
 -- setting followed by incrementing is just setting
 -- setting to 0 followed by a loop is just setting to 0
--- ...0+++... => ...3...   ...0[_]... => ...0...
+-- 0+++ => 3   0[_] => 0
 justSet :: BF -> BF
 justSet ops = case ops of
   Set x    : Inc y  : xs -> justSet $ Set (x + y) : xs
@@ -74,7 +73,7 @@ justSet ops = case ops of
   otherwise              -> basic justSet ops
 
 -- [->+<] and [>+<-] are used to multiply to the next value
--- ...[->>+++<<]... => ...*2,3...
+-- [->>+++<<] => *2,3
 mul :: BF -> BF
 mul ops = case ops of
   Mul0 x a b : xs | x > 0 && a == -b -> Mul a x : mul xs

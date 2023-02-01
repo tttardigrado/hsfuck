@@ -15,6 +15,8 @@ opToC n op = case op of
   Mov x       -> concat [tabs n,   "ptr += ", show x, ";\n"]
   Out         -> tabs n ++ "putchar(*ptr);\n"
   Inp         -> tabs n ++ "*ptr = getchar();\n"
+  RtC         -> tabs n ++ "*ptr = reg;\n"
+  CtR         -> tabs n ++ "reg = *ptr;\n"
   Set x       -> concat [tabs n, "*ptr = ",  show x, ";\n"]
   Mul d x     -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
   Dup         -> tabs n ++ "dup();\n"
@@ -39,7 +41,8 @@ generateC bf = concat
   , "#define dup() *(ptr+1) += *ptr; *(ptr+2) += *ptr; *ptr = 0;\n"
   , "\nint main(void) {\n"
   , "\tchar tape[30000] = {0};\n"
-  , "\tchar *ptr = tape;\n\n"
+  , "\tchar *ptr = tape;\n"
+  , "\tchar  reg = 0;\n\n"
   , bfToC 1 bf
   , "\n}"
   ]
