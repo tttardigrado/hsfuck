@@ -28,14 +28,14 @@ pExpr = many1
       <|> Sft     /: '«' 
       <|> Inp     <$ many1 (char ',')
       <|> Out     <$ char '.'
-      <|> CtR     <$ many1 (char '@')
-      <|> RtC     <$ many1 (char '#')
-      <|> AOp PLS <$ char '$'
+      <|> CtR     <$ many1 (char '$')
+      <|> RtC     <$ many1 (char '&')
+      <|> AOp PLS <$ char '@'
       <|> AOp MNS <$ char '_'
       <|> AOp MUL <$ char '*'
       <|> AOp DIV <$ char '/'
       <|> AOp MOD <$ char '%'
-      <|> Dbg     <$ char '?'
+      <|> Dbg     <$ char '#'
       <|> Loop [Inc 1] <$ char '0'
       <|> pLoop
 
