@@ -1,6 +1,6 @@
 module Generator ( generateC ) where
 
-import Lang ( Op (..), BF )
+import Lang ( Op (..), BF, Arith (..) )
 
 -- generate a string of n tabs
 tabs :: Int -> String
@@ -17,6 +17,11 @@ opToC n op = case op of
   Inp         -> tabs n ++ "*ptr = getchar();\n"
   RtC         -> tabs n ++ "*ptr = reg;\n"
   CtR         -> tabs n ++ "reg = *ptr;\n"
+  AOp PLS     -> tabs n ++ "*ptr += reg;\n"
+  AOp MNS     -> tabs n ++ "*ptr -= reg;\n"
+  AOp MUL     -> tabs n ++ "*ptr *= reg;\n"
+  AOp DIV     -> tabs n ++ "*ptr /= reg;\n"
+  AOp MOD     -> tabs n ++ "*ptr %= reg;\n"
   Set x       -> concat [tabs n, "*ptr = ",  show x, ";\n"]
   Mul d x     -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
   Dup         -> tabs n ++ "dup();\n"
@@ -40,9 +45,9 @@ generateC bf = concat
   , "#define debug() printf(\"\\n# DEBUG: | \");for(int i=0;i<10;i++){printf(\"%d | \", *(ptr+i));}printf(\"\\n\\n\");\n"
   , "#define dup() *(ptr+1) += *ptr; *(ptr+2) += *ptr; *ptr = 0;\n"
   , "\nint main(void) {\n"
-  , "\tchar tape[30000] = {0};\n"
-  , "\tchar *ptr = tape;\n"
-  , "\tchar  reg = 0;\n\n"
+  , "\tunsigned char tape[30000] = {0};\n"
+  , "\tunsigned char *ptr = tape;\n"
+  , "\tunsigned char  reg = 0;\n\n"
   , bfToC 1 bf
-  , "\n}"
+  , "\n\treturn 0;\n}"
   ]

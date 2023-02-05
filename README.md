@@ -52,10 +52,10 @@ bf()
 - [X] `0` set the cell to 0
 - [X] Register
 - [X] `»` and `«` -> right and left shifts
-- [ ] `!` -> bitwise not of the current cell
-- [ ] `^`, `&` and `|` -> bitwise XOR, AND and OR of the current cell and the register
-- [ ] `*`, `/`, `_`, `$` -> multiplication, int division, subtraction and sum of the current cell and the register
+- [X] `*`, `/`, `_`, `$` -> multiplication, int division, subtraction and sum of the current cell and the register
 - [ ] `~` -> swap register and cell
 - [X] `#` -> set register to cell
 - [X] `@` -> set cell to register
 - [ ] Add tests for `#` and `@`
+- [ ] Add tests for `*`, `/`, `_`, `$`
+- [ ] Add commands documentation
