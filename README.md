@@ -48,11 +48,24 @@ bf()
 }
 ```
 
+## Commands
+* `+` increment the value of the current cell
+* `-` decrement the value of the current cell
+* `»` right shift the value of the current cell
+* `«` left shift the value of the current cell 
+* `>` move the tape one cell to the right
+* `<` move the tape one cell to the left
+* `.` print the value of the current cell 
+* `,` read the value of an ASCII character from stain to the current cell
+* `[c]` execute `c` while the value of the cell is not zero
+* `#` print debug information
+
 ## TO DO:
 - [X] `0` set the cell to 0
-- [X] Register
 - [X] `»` and `«` -> right and left shifts
+- [ ] Add more print and read options (integer)
 - [ ] remove register
 - [ ] compile to MIPS
 - [ ] Add compilation target flag
 - [ ] Add commands documentation
+- [ ] Add references
