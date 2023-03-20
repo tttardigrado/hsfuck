@@ -6,7 +6,7 @@
 
 ![Logo](./Logo.png)
 
-A _brainfuck_ to _C_ compiler written in _Haskell_
+A _brainfuck_ compiler written in _Haskell_
 
 ## Tech stack
 * Languages: Haskell
@@ -26,8 +26,8 @@ cd hsfuck
 # build the project using cabal
 cabal build
 
-# optionally move the binary into another location
-cp ./dist-newstyle/.../bf2 .
+# optionally move the binary into another location with
+# cp ./path/to/binary .
 
 # run the compiler
 # (fst argument is the path of the src file)
@@ -67,5 +67,5 @@ bf()
 - [ ] remove register
 - [ ] compile to MIPS
 - [ ] Add compilation target flag
-- [ ] Add commands documentation
+- [X] Add commands documentation
 - [ ] Add references
