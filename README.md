@@ -52,10 +52,7 @@ bf()
 - [X] `0` set the cell to 0
 - [X] Register
 - [X] `»` and `«` -> right and left shifts
-- [X] `*`, `/`, `_`, `$` -> multiplication, int division, subtraction and sum of the current cell and the register
-- [ ] `~` -> swap register and cell
-- [X] `&` -> set register to cell
-- [X] `$` -> set cell to register
-- [ ] Add tests for `&` and `$`
-- [ ] Add tests for `*`, `/`, `_`, `@`
+- [ ] remove register
+- [ ] compile to MIPS
+- [ ] Add compilation target flag
 - [ ] Add commands documentation
