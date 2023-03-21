@@ -60,6 +60,16 @@ bf()
 * `[c]` execute `c` while the value of the cell is not zero
 * `#` print debug information
 
+## References
+* Brainfuck
+    * [An introduction to programming in BF](https://www.iwriteiam.nl/Ha_bf_intro.html)
+    * [BF is Turing-complete](https://www.iwriteiam.nl/Ha_bf_Turing.html)
+* Optimizations
+    * [Brainfuck optimization strategies](http://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html)
+    * [BFC Optimizations](https://bfc.wilfred.me.uk/docs/optimisations)
+    * [An Optimising BF Compiler](https://www.wilfred.me.uk/blog/2015/08/29/an-optimising-bf-compiler/)
+    * [Even More BF Optimisations](https://www.wilfred.me.uk/blog/2015/10/18/even-more-bf-optimisations/)
+
 ## TO DO:
 - [X] `0` set the cell to 0
 - [X] `»` and `«` -> right and left shifts
@@ -68,4 +78,4 @@ bf()
 - [ ] compile to MIPS
 - [ ] Add compilation target flag
 - [X] Add commands documentation
-- [ ] Add references
+- [X] Add references
