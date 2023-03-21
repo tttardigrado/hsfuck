@@ -64,7 +64,7 @@ bf()
 - [X] `0` set the cell to 0
 - [X] `»` and `«` -> right and left shifts
 - [ ] Add more print and read options (integer)
-- [ ] remove register
+- [X] remove register
 - [ ] compile to MIPS
 - [ ] Add compilation target flag
 - [X] Add commands documentation

@@ -1,9 +1,6 @@
 {-# LANGUAGE PatternSynonyms #-}
 
-module Lang (Op (..), BF, Arith (..), pattern Clear0, pattern Clear1, pattern Mul0, pattern Mul1, pattern Dup0, pattern Dup1) where
-
-data Arith = PLS | MNS | MUL | DIV | MOD
-  deriving (Show, Eq)
+module Lang (Op (..), BF, pattern Clear0, pattern Clear1, pattern Mul0, pattern Mul1, pattern Dup0, pattern Dup1) where
 
 -- Representation of an individual brainfuck operation
 data Op
@@ -12,9 +9,6 @@ data Op
   | Sft Int     -- « »     right/left shift
   | Out         -- .       output
   | Inp         -- ,       input
-  | RtC         -- #       reg to cell   Ptr = Reg
-  | CtR         -- @       cell to reg   Reg = Ptr
-  | AOp Arith   -- / * _ $ arithmetic operations with register
   | Set Int     -- OPTIM:  set current to value
   | Mul Int Int -- OPTIM:  set displacement cell to a multiple
   | Dup         -- OPTIM:  duplicate to the two next values

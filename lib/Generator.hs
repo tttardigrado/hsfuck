@@ -1,6 +1,6 @@
 module Generator ( generateC ) where
 
-import Lang ( Op (..), BF, Arith (..) )
+import Lang ( Op (..), BF )
 
 -- generate a string of n tabs
 tabs :: Int -> String
@@ -15,13 +15,6 @@ opToC n op = case op of
   Mov x       -> concat [tabs n,   "ptr += ", show x, ";\n"]
   Out         -> tabs n ++ "putchar(*ptr);\n"
   Inp         -> tabs n ++ "*ptr = getchar();\n"
-  RtC         -> tabs n ++ "*ptr = reg;\n"
-  CtR         -> tabs n ++ "reg = *ptr;\n"
-  AOp PLS     -> tabs n ++ "*ptr += reg;\n"
-  AOp MNS     -> tabs n ++ "*ptr -= reg;\n"
-  AOp MUL     -> tabs n ++ "*ptr *= reg;\n"
-  AOp DIV     -> tabs n ++ "*ptr /= reg;\n"
-  AOp MOD     -> tabs n ++ "*ptr %= reg;\n"
   Set x       -> concat [tabs n, "*ptr = ",  show x, ";\n"]
   Mul d x     -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
   Dup         -> tabs n ++ "dup();\n"
