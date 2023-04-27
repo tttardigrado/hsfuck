@@ -1,4 +1,4 @@
-module Generator ( generateC ) where
+module GenC ( generateC ) where
 
 import Lang ( IOKind (..), Op (..), BF )
 
@@ -41,8 +41,7 @@ generateC bf = concat
   , "#define dup() *(ptr+1) += *ptr; *(ptr+2) += *ptr; *ptr = 0;\n"
   , "\nint main(void) {\n"
   , "\tunsigned char tape[30000] = {0};\n"
-  , "\tunsigned char *ptr = tape;\n"
-  , "\tunsigned char  reg = 0;\n\n"
+  , "\tunsigned char *ptr = tape;\n\n"
   , bfToC 1 bf
   , "\n\treturn 0;\n}"
   ]

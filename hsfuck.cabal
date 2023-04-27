@@ -18,7 +18,8 @@ maintainer:         gspteixeira@gmail.com
 extra-source-files: CHANGELOG.md
 
 library hsfuck-lib
-    exposed-modules:  Generator
+    exposed-modules:  GenC
+                   ,  GenMIPS
                    ,  Lang
                    ,  Optimizer
                    ,  Parser
@@ -33,7 +34,8 @@ executable hsfuck
     build-depends:    base ^>=4.13
                  ,    parsec
                  ,    hsfuck-lib
-    other-modules:    Generator
+    other-modules:    GenC
+                 ,    GenMIPS
                  ,    Lang
                  ,    Optimizer
                  ,    Parser
@@ -49,7 +51,8 @@ test-suite tests
                  ,    hsfuck-lib
     hs-source-dirs:   tests
                   ,   lib
-    other-modules:    Generator
+    other-modules:    GenC
+                 ,    GenMIPS
                  ,    Lang
                  ,    Optimizer
                  ,    Parser

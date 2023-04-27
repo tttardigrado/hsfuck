@@ -77,7 +77,8 @@ bf()
 - [X] `»` and `«` -> right and left shifts
 - [X] Add more print and read options (integer)
 - [X] remove register
-- [ ] compile to MIPS
+- [X] compile to MIPS
+- [ ] Add debug to MIPS target
 - [ ] Add compilation target flag
 - [X] Add commands documentation
 - [X] Add references

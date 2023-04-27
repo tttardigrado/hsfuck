@@ -1,12 +1,11 @@
 module Main where
 
 import System.Environment ( getArgs )
-import Parser ( parseBF )
-import Optimizer ( optimizeBF )
-import Generator ( generateC )
+import Parser             ( parseBF )
+import Optimizer          ( optimizeBF )
+import GenC               ( generateC )
 
-import System.Exit ( exitSuccess, exitFailure )
-
+import System.Exit        ( exitSuccess, exitFailure )
 
 
 compiler :: String -> String -> IO ()
