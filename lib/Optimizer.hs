@@ -2,7 +2,7 @@
 
 module Optimizer ( optimizeBF ) where
 
-import Lang ( Op (..), BF, pattern Clear0, pattern Clear1, pattern Mul0, pattern Mul1, pattern Dup0, pattern Dup1)
+import Lang (IOKind (..), Op (..), BF, pattern Clear0, pattern Clear1, pattern Mul0, pattern Mul1, pattern Dup0, pattern Dup1)
 
 -- basic pattern for optimization function that covers the "rest" of the cases
 basic :: (BF -> BF) -> BF -> BF
@@ -22,7 +22,7 @@ initLoop ops = case ops of
 -- [a][_] => [a]
 deadLoop :: BF -> BF
 deadLoop ops = case ops of
-  Loop x : Loop _ : xs -> deadLoop $ Loop (x) : xs
+  Loop x : Loop _ : xs -> deadLoop $ Loop x : xs
   otherwise            -> basic deadLoop ops
 
 -- [-] and [+] are used to set the cell to 0
@@ -49,10 +49,10 @@ deadSet ops = case ops of
   Set _ : Set x : xs -> deadSet $ Set x : xs
   Inc _ : Set x : xs -> deadSet $ Set x : xs
   Sft _ : Set x : xs -> deadSet $ Set x : xs
-  Inp   : Set x : xs -> deadSet $ Set x : xs
-  Set _ : Inp   : xs -> deadSet $ Inp   : xs
-  Inc _ : Inp   : xs -> deadSet $ Inp   : xs
-  Sft _ : Inp   : xs -> deadSet $ Inp   : xs
+  Inp _ : Set x : xs -> deadSet $ Set x : xs
+  Set _ : Inp m : xs -> deadSet $ Inp m : xs
+  Inc _ : Inp m : xs -> deadSet $ Inp m : xs
+  Sft _ : Inp m : xs -> deadSet $ Inp m : xs
   otherwise          -> basic deadSet ops
 
 -- moving/shifting/increment by zero is useless

@@ -31,7 +31,7 @@ cabal build
 
 # run the compiler
 # (fst argument is the path of the src file)
-# (snd argument is the path of the output file) 
+# (snd argument is the path of the output file)
 ./hsfuck test.bf test.c
 
 # compile and run the C code
@@ -52,11 +52,13 @@ bf()
 * `+` increment the value of the current cell
 * `-` decrement the value of the current cell
 * `»` right shift the value of the current cell
-* `«` left shift the value of the current cell 
+* `«` left shift the value of the current cell
 * `>` move the tape one cell to the right
 * `<` move the tape one cell to the left
-* `.` print the value of the current cell 
-* `,` read the value of an ASCII character from stain to the current cell
+* `.` print the value of the current cell as ASCII
+* `,` read the value of an ASCII character from stdin to the current cell
+* `:` print the value of the current cell as an integer
+* `;` read an integer from stdin to the current cell
 * `[c]` execute `c` while the value of the cell is not zero
 * `#` print debug information
 
@@ -73,7 +75,7 @@ bf()
 ## TO DO:
 - [X] `0` set the cell to 0
 - [X] `»` and `«` -> right and left shifts
-- [ ] Add more print and read options (integer)
+- [X] Add more print and read options (integer)
 - [X] remove register
 - [ ] compile to MIPS
 - [ ] Add compilation target flag

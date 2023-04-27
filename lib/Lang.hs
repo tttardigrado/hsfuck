@@ -1,14 +1,18 @@
 {-# LANGUAGE PatternSynonyms #-}
 
-module Lang (Op (..), BF, pattern Clear0, pattern Clear1, pattern Mul0, pattern Mul1, pattern Dup0, pattern Dup1) where
+module Lang (IOKind (..), Op (..), BF, pattern Clear0, pattern Clear1, pattern Mul0, pattern Mul1, pattern Dup0, pattern Dup1) where
+
+-- Enum for the kind of data that should be printed / read in IO actions
+data IOKind = KChr | KNum
+  deriving (Show, Eq)
 
 -- Representation of an individual brainfuck operation
 data Op
   = Inc Int     -- + -     inc/dec current by amount
   | Mov Int     -- < >     move pointer by ammount
   | Sft Int     -- « »     right/left shift
-  | Out         -- .       output
-  | Inp         -- ,       input
+  | Out IOKind  -- . :     output
+  | Inp IOKind  -- , ;     input
   | Set Int     -- OPTIM:  set current to value
   | Mul Int Int -- OPTIM:  set displacement cell to a multiple
   | Dup         -- OPTIM:  duplicate to the two next values

@@ -1,6 +1,6 @@
 module Generator ( generateC ) where
 
-import Lang ( Op (..), BF )
+import Lang ( IOKind (..), Op (..), BF )
 
 -- generate a string of n tabs
 tabs :: Int -> String
@@ -13,8 +13,10 @@ opToC n op = case op of
   Sft x | x>0 -> concat [tabs n, "*ptr >>= ", show x, ";\n"]
   Sft x       -> concat [tabs n, "*ptr <<= ", show x, ";\n"]
   Mov x       -> concat [tabs n,   "ptr += ", show x, ";\n"]
-  Out         -> tabs n ++ "putchar(*ptr);\n"
-  Inp         -> tabs n ++ "*ptr = getchar();\n"
+  Out KChr    -> tabs n ++ "putchar(*ptr);\n"
+  Out KNum    -> tabs n ++ "printf(\"%d\", *ptr);\n"
+  Inp KChr    -> tabs n ++ "*ptr = getchar();\n"
+  Inp KNum    -> tabs n ++ "scanf(\"%d\", ptr);\n"
   Set x       -> concat [tabs n, "*ptr = ",  show x, ";\n"]
   Mul d x     -> concat [tabs n, "mul(", show d, ", ", show x, ");\n"]
   Dup         -> tabs n ++ "dup();\n"
