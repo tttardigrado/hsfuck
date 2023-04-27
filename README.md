@@ -16,7 +16,8 @@ A _brainfuck_ compiler written in _Haskell_
 I wrote a [blog post](https://tttardigrado.github.io/posts/hsfuck/) about this project
 
 ## How to install and use
-You need to have cabal and Haskell installed. Then run the following commands
+You need to have **cabal**, **Haskell** installed. Then run the following commands
+To run the program you need **gcc** for the **C** version and **SPIM** for the **MIPS** version
 
 ```sh
 # clone the repo and move to it
@@ -30,21 +31,32 @@ cabal build
 # cp ./path/to/binary .
 
 # run the compiler
-# (fst argument is the path of the src file)
-# (snd argument is the path of the output file)
-./hsfuck test.bf test.c
+# (fst argument is compilation target mode. Either c or mips)
+# (snd argument is the path of the src file)
+# (trd argument is the path of the output file)
+./hsfuck c test.bf test.c
 
 # compile and run the C code
 gcc test.c
 ./a.out
 ```
 
-Suggestion: Add this snippet to your `.bashrc`
+Suggestion: Add the following snippets to your `.bashrc`
 ```sh
-bf()
+# compile brainfuck to c and then to binary
+bfC()
 {
-    ./hsfuck $1 /tmp/ccode.c
+    ./hsfuck c $1 /tmp/ccode.c
     gcc /tmp/ccode.c -o $2
+}
+```
+
+```sh
+# simulate as MIPS (using SPIM)
+bfMIPS()
+{
+    ./hsfuck mips $1 /tmp/mipscode.mips
+    spim -file /tmp/mipscode.mips
 }
 ```
 
@@ -78,7 +90,8 @@ bf()
 - [X] Add more print and read options (integer)
 - [X] remove register
 - [X] compile to MIPS
-- [ ] Add debug to MIPS target
-- [ ] Add compilation target flag
+- [X] Add debug to MIPS target
+- [ ] Test MIPS and C output
+- [X] Add compilation target flag
 - [X] Add commands documentation
 - [X] Add references

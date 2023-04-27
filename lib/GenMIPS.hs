@@ -38,6 +38,29 @@ mulMIPS d m = concat
   , "\t\tsw   $t1, ", show (d * 4), "($s0)\n"
   ]
 
+debugMIPS :: String
+debugMIPS = concat
+  [ "debug:  la   $a0, dbg\n"
+  , "\t\tli   $v0, 4\n"
+  , "\t\tsyscall\n\n"
+  
+  , "\t\tmove $t0, $s0\n"
+  , "loopd:  bge  $t0, 40, endd\n"
+  , "\t\tsw   $a0, 0($t0)\n"
+  , "\t\tli   $v0, 1\n"
+  , "\t\tsyscall\n"
+  , "\t\tla   $a0, bar\n"
+  , "\t\tli   $v0, 4\n"
+  , "\t\tsyscall\n"
+  , "\t\taddi $t0, $t0, 4\n"
+
+  , "endd:   la   $a0, newl\n"
+  , "\t\tli   $v0, 4\n"
+  , "\t\tsyscall\n"
+
+  , "\t\tjr  $ra\n"
+  ]
+
 -- $s0 -> ptr    $s1 -> *ptr
 -- convert a single operation op into it's C equivalent idented by n
 opToMIPS :: Int -> Op -> String
@@ -53,7 +76,7 @@ opToMIPS n op = case op of
   Set x       -> "\t\tli   $s1, " ++ show x ++ "\n"
   Mul d x     -> mulMIPS d x
   Dup         -> "\t\tsw   $s1, 4($s0)\n\t\tsw   $s1, 8($s0)\n\t\tli   $s1, 0\n"
-  Dbg         -> undefined
+  Dbg         -> "\t\tjal  debug\n"
   Loop xs     -> loopMIPS n xs
 
 -- convert a brainfuck program to MIPS starting with a given Loop nesting level
@@ -65,12 +88,16 @@ bfToMIPS = concatMap . opToMIPS
 generateMIPS :: BF -> String
 generateMIPS bf = concat
   [ "\t\t.data\n"
-  , "arr:    .word 0:30000\n\n"
+  , "arr:    .word 0:30000\n"
+  , "dbg:    .asciiz \"\\n# DEBUG: | \"\n"
+  , "bar:    .asciiz \" | \"\n"
+  , "newl:   .asciiz \"\\n\\n\"\n\n"
   , "\t\t.text\n"
   , "main:\n"
   , "\t\tla   $s0, arr\n"
   , "\t\tli   $s1, 0\n\n"
   , bfToMIPS 0 bf
   , "\n\t\tli   $v0, 10\n"
-  , "\t\tsyscall"
+  , "\t\tsyscall\n\n"
+  , debugMIPS
   ]
